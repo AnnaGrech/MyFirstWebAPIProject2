@@ -54,6 +54,40 @@ namespace MyFirstWebAPIProject.Controllers
 
         }
 
+        // DELETE: api/tasks
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTask(int id)
+        {
+            var exersice = _tasks.FirstOrDefault(p => p.Id == id);
+            if (exersice == null)
+            {
+                return NotFound();
+            }
+            _tasks.Remove(exersice);
+            // In a real application, here you would delete the product from the database
+            return NoContent();
+        }
 
+        // PUT: api/tasks
+        [HttpPut("{id}")]
+        public IActionResult PutTask(int id, Task1 exersice)
+        {
+            if (id != exersice.Id)
+            {
+                return BadRequest();
+            }
+            var existingTask = _tasks.FirstOrDefault(p => p.Id == id);
+            if (existingTask == null)
+            {
+                return NotFound();
+            }
+            existingTask.Date = exersice.Date;
+            existingTask.Title = exersice.Title;
+            existingTask.Description = exersice.Description;
+            // In a real application, here you would update the product in the database
+            return NoContent();
+        }
     }
+
+ 
 }
