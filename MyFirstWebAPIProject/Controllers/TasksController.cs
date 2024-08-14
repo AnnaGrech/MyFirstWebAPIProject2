@@ -14,5 +14,34 @@ namespace MyFirstWebAPIProject.Controllers
             new Task1 { Id = 3, Date = new DateOnly(2024, 08, 16), Title = "Настолки", Description = "Игры в Мипле в 20.00" },
             // Add more tasks
         };
+
+        // GET: api/tasks
+        [HttpGet]
+        public ActionResult<IEnumerable<Task1>> GetTasks()
+        {
+            return _tasks;
+        }
+
+        // GET: api/tasks/2
+        [HttpGet("{id}")]
+        public ActionResult<Task1> GetTasks(int id)
+        {
+            var Task1 = _tasks.FirstOrDefault(p => p.Id == id);
+            if (Task1 == null)
+            {
+                return NotFound();
+            }
+            return Task1;
+        }
+
+        // POST: api/tasks
+        [HttpPost]
+        public ActionResult<Task1> PostTasks(Task1 exersice)
+        {
+            _tasks.Add(exersice);
+            return CreatedAtAction(nameof(GetTasks), new { id = exersice.Id }, exersice);
+        }
+
+
     }
 }
