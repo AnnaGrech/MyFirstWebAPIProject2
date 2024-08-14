@@ -38,8 +38,20 @@ namespace MyFirstWebAPIProject.Controllers
         [HttpPost]
         public ActionResult<Task1> PostTasks(Task1 exersice)
         {
+            foreach (var task in _tasks)
+            {
+                if (task.Id == exersice.Id)
+                {
+                    return BadRequest("You are rukozhopuii progremmist");
+                }
+            }
+
+
             _tasks.Add(exersice);
+        
             return CreatedAtAction(nameof(GetTasks), new { id = exersice.Id }, exersice);
+
+
         }
 
 
